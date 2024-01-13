@@ -1,6 +1,23 @@
 # GIOS Prep
 
-## Pointers and Function Arguments
+<!-- TOC -->
+* [GIOS Prep](#gios-prep)
+  * [Pointers and Arrays](#pointers-and-arrays)
+    * [Pointers and Function Arguments](#pointers-and-function-arguments)
+    * [Pointers and Arrays](#pointers-and-arrays-1)
+    * [Address Arithmetic](#address-arithmetic)
+    * [Character Pointer and Functions](#character-pointer-and-functions)
+    * [Pointer Arrays, Pointers to Pointers](#pointer-arrays-pointers-to-pointers)
+    * [Multi-dimensional Array](#multi-dimensional-array)
+    * [Pointers vs. Multi-dimensional Arrays](#pointers-vs-multi-dimensional-arrays)
+    * [Command-line Arguments](#command-line-arguments)
+    * [Pointers to Functions](#pointers-to-functions)
+  * [References](#references)
+<!-- TOC -->
+
+## Pointers and Arrays
+
+### Pointers and Function Arguments
 
 ![img.png](images/img.png)
 
@@ -8,7 +25,7 @@
   * `&` is the address-of operator.
   * `px` points to the address of `a`.
 
-## Pointers and Arrays
+### Pointers and Arrays
 
 ![img_1.png](images/img_1.png)
 
@@ -28,7 +45,7 @@
     * `f(int arr[]) {...}`
     * `f(int *arr) {...}` (preferred because it says the parameter is a pointer)
 
-## Address Arithmetic
+### Address Arithmetic
 * A pointer and an integer may be added or subtracted:
   * `p++;`
   * `p+=i;` (i is an **int**)
@@ -40,7 +57,7 @@
 * A pointer of one type cannot be assigned to a pointer of another type unless the pointer on the right-hand side of 
   the assignment is `void *`.
 
-## Character Pointer and Functions
+### Character Pointer and Functions
 
 ![img_2.png](images/img_2.png)
 
@@ -51,15 +68,15 @@
 * `*p++`: Postfix-increment `p`, then dereference the resulting `p`.
 * `*--p`: Prefix-decrement `p`, then dereference the resulting `p`
 
-## Pointer Arrays, Pointers to Pointers
+### Pointer Arrays, Pointers to Pointers
 
 * `char *lineptr [MAXLINES];`:  Declares an array of pointers to characters with a maximum size of MAXLINES.
 
-## Multi-dimensional Array
+### Multi-dimensional Array
 
 * _In general, only the first dimension (subscript) of an array is free; All the others have to be specified._
 
-## Pointers vs. Multi-dimensional Arrays
+### Pointers vs. Multi-dimensional Arrays
 
 ```c
 int a[10][20];
@@ -70,15 +87,42 @@ int *b[10];
 * `b`'s definition only allocates 10 pointers and does not initialize them (statically or dynamically).
   * The important advantage of the pointer array is that the rows of the array may be of different lengths.
 
-## Command-line Arguments
+### Command-line Arguments
 
 * `(*++argv)[0]` is the first character of a string in the argument vector.
 * `(*++argv)[0]` is equivalent to `**++argv`.
 
-## Pointers to Functions
+### Pointers to Functions
 
 * Use `void *` in a function pointer to allow processing of any data type. Any pointer can be cast to `void *` and 
   back again without any loss of information.
+
+## Memory Allocation
+
+### Allocating Memory on the Heap: _malloc()_ and _free()_
+
+![img_3.png](img_3.png)
+
+* Because _malloc()_ returns _void *_, we can assign it to any type of C pointer.
+* If memory cannot be allocated, _malloc()_ will return an error. All calls to _malloc()_ should check for this
+ error return.
+
+![img_4.png](img_4.png)
+
+* The _free()_ function deallocates the block of memory pointed to by its _ptr_ argument, which should be an address 
+  previously returned by _malloc()_.
+  * If _ptr_ is NULL, then _free()_ does nothing.
+  * Making any use of _ptr_ after the call to _free()_ is an error that can lead unpredictable results.
+
+Avoid these types of errors:
+  * After we allocate a block of memory, we should be careful not to touch any bytes outside the range of that block.
+  * It is an error to free the same piece of allocated memory more than once.
+  * Never call _free()_ with a pointer that was not obtained by a call to one of the functions in the malloc package.
+  * Deallocate any memory after we have finished using it.
+
+## Sockets: Introduction
+
+![img_5.png](img_5.png)
 
 ## References
 
